@@ -6,7 +6,7 @@ if isfile("Project.toml") && isfile("Manifest.toml")
 end
 
 if isinteractive()
-    # Load Default Packages
+    # Load default packages.
     using About
     using Infiltrator
     using OhMyREPL
