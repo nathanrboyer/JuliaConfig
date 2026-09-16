@@ -1,17 +1,26 @@
-# Create a temporary environment available for extra packages needed during a working REPL session.
-# Reference: https://discourse.julialang.org/t/tip-macro-to-install-use-package-in-temporary-environment
-insert!(LOAD_PATH, 2, mktempdir())
-
 # Activate a local environment if it exists.
-# Reference: https://discourse.julialang.org/t/what-is-in-your-startup-jl/18228/20
+#   Reference: https://discourse.julialang.org/t/what-is-in-your-startup-jl/18228/20
 if isfile("Project.toml") && isfile("Manifest.toml")
     import Pkg
     Pkg.activate(".")
 end
 
-# Custom function definitions
 if isinteractive()
+    # Load Default Packages
+    using About
+    using Infiltrator
+    using OhMyREPL
+    OhMyREPL.colorscheme!("OneDark")
     using Printf  # required for `error` function
+    using Revise
+    using ShareAdd
+    using TerminalPager
+
+    # Make a temporary environment available to install packages into during a working REPL session.
+    #   Reference: https://discourse.julialang.org/t/tip-macro-to-install-use-package-in-temporary-environment
+    insert!(LOAD_PATH, 2, mktempdir())
+
+    # Custom function definitions
     @doc """
         exportall(mod::Module)
 
@@ -79,18 +88,9 @@ if isinteractive()
         return err
     end
     error(x1, x2; ref=:avg) = error(x1, x2, ref)
-end
 
-# Automatically load the packages necessary to execute common commands when needed.
-# Reference: https://discourse.julialang.org/t/ann-shareadd-jl-making-easy-to-import-packages-from-multiple-environments/121261/3
-if isinteractive()
-    using About
-    using Infiltrator
-    using OhMyREPL
-    OhMyREPL.colorscheme!("OneDark")
-    using Revise
-    using ShareAdd
-    using TerminalPager
+    # Automatically load the packages necessary to execute common commands when needed.
+    #   Reference: https://discourse.julialang.org/t/ann-shareadd-jl-making-easy-to-import-packages-from-multiple-environments/121261/3
     using BasicAutoloads: register_autoloads
     register_autoloads([
         ["data, mapping, visual, draw"]     => :(isdefined(Main, :data) || @usingany AlgebraOfGraphics),
