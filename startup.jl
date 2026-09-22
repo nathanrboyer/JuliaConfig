@@ -130,7 +130,6 @@ if isinteractive()
                                                         const STEEL_DENSITY = 0.28lb/inch^3;
                                                         Unitful.preferunits(inch);
                                                         Unitful.preferunits(lb);
-                                                        Unitful.preferunits(lbf);
                                                     )
                                                 ),
         ["@variables", "@parameters"]       => :(@usingany Symbolics, Nemo),
