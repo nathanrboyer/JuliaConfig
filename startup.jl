@@ -49,17 +49,9 @@ if isinteractive()
         ["PrecompileAfterUpdate"]           => :(@usingany PrecompileAfterUpdate),
         ["mean", "std", "median"]           => :(@usingany Statistics),
         [
-            "@u_str", "@ud_str", "inch", "mm",
-            "lb", "kg", "lbf", "°F", "°C",
-            "psi", "ksi", "kPa", "MPa",
-            "bar", "atm", "STEEL_DENSITY",
-            "cylinder_volume",
-            "shell_volume", "error",
-        ]                                   => :(
-                                                    isdefined(Main, Symbol("@u_str")) ||
-                                                    isdefined(Main, :error) ||
-                                                    @usingany VesselUnits
-                                                ),
+            "@u_str", "@ud_str", "inch", "mm", "lb", "kg", "lbf", "°F", "°C", "psi", "ksi", "kPa",
+            "MPa", "bar", "atm", "STEEL_DENSITY", "cylinder_volume", "shell_volume", "percent_error",
+        ]                                   => :(isdefined(Main, Symbol("@u_str")) || @usingany VesselUnits),
         ["@variables", "@parameters"]       => :(@usingany Symbolics, Nemo),
         ["@test", "@testset"]               => :(@usingany Test),
         ["TestEnv"]                         => :(@usingany TestEnv),
